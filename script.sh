@@ -25,7 +25,7 @@ else
 
 	if [ -z "$INFO" ]; then
 		STATUS=0
-        	REASON="runner_not_found"
+        REASON="runner_not_found"
 	else
 		read -r S L <<< "$INFO"
 		if [ "$S" != "online" ]; then
@@ -38,7 +38,7 @@ else
 		NOW=$(date +%s)
 		LAST=$(date -d "$L" +%s 2>/dev/null)
 		if [ -z "$LAST" ]; then
-                	STATUS=0
+        	STATUS=0
 			REASON="invalid_last_contact"
 	else
 		DIFF=$(( (NOW - LAST) / 60 ))
@@ -46,9 +46,8 @@ else
 			STATUS=0
 			REASON="zombie_${DIFF}min"
 	else
-                    STATUS=1
-                    REASON="OK"
-				fi
+            STATUS=1
+            REASON="OK"
 			fi
 		fi
 	fi
