@@ -48,6 +48,7 @@ else
 	else
             STATUS=1
             REASON="OK"
+				fi
 			fi
 		fi
 	fi
@@ -62,4 +63,3 @@ zabbix_sender -z "$ZABBIX_SERVER" \
     -s "$ZABBIX_HOST" \
     -k runner.reason \
     -o "$REASON"
-
