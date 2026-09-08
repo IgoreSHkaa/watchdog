@@ -1,21 +1,12 @@
 #!/bin/bash
 
-<<<<<<< HEAD
 GITHUB_TOKEN="${GITHUB_TOKEN}"
 REPO_OWNER="${REPO_OWNER}"
 REPO_NAME="${REPO_NAME}"
 RUNNER_NAME="${RUNNER_NAME:-$(hostname)}"
 ZABBIX_SERVER="${ZABBIX_SERVER}"
 ZABBIX_HOST="${ZABBIX_HOST:-$(hostname)}"
-=======
-GITHUB_TOKEN="токен"
-REPO_OWNER="владелец"
-REPO_NAME="репозиторий"
-RUNNER_NAME="раннер"
-ZABBIX_SERVER="ип"
-ZABBIX_HOST="хост"
->>>>>>> 5259584a18fb75e8e6b82b72d92e42c5a6f5f74d
-MAX_LAST_CONTACT_MINUTES=10
+MAX_LAST_CONTACT_MINUTES="${MAX_LAST_CONTACT_MINUTES:-10}"
 
 
 
@@ -47,11 +38,7 @@ else
 		NOW=$(date +%s)
 		LAST=$(date -d "$L" +%s 2>/dev/null)
 		if [ -z "$LAST" ]; then
-<<<<<<< HEAD
         		STATUS=0
-=======
-        	STATUS=0
->>>>>>> 5259584a18fb75e8e6b82b72d92e42c5a6f5f74d
 			REASON="invalid_last_contact"
 	else
 		DIFF=$(( (NOW - LAST) / 60 ))
