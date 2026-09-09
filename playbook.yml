@@ -23,6 +23,7 @@
           - procps
           - coreutils
         state: present
+        lock_timeout: 300
 
     - name: Create environment directory
       file:
