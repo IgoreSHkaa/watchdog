@@ -1,0 +1,57 @@
+---
+- name: Deploy GitHub Runner monitor script
+  hosts: all
+  become: yes
+  vars:
+    script_path: /usr/local/bin/script.sh
+    env_dir: /etc/runner_monitor
+    env_file: "{{ env_dir }}/.env"
+    cron_user: root
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install required packages
+      apt:
+        name:
+          - curl
+          - jq
+          - zabbix-sender
+          - procps
+          - coreutils
+        state: present
+
+    - name: Create environment directory
+      file:
+        path: "{{ env_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0700'
+
+    - name: Copy runner monitor script
+      copy:
+        src: files/script.sh
+        dest: "{{ script_path }}"
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Generate .env from template
+      template:
+        src: templates/env.example
+        dest: "{{ env_file }}"
+        owner: root
+        group: root
+        mode: '0600'
+
+    - name: Ensure cron job is present
+      cron:
+        name: "Run GitHub runner monitor"
+        user: "{{ cron_user }}"
+        minute: "*/5"
+        job: ". {{ env_file }} && {{ script_path }} >/dev/null 2>&1"
+        state: present
