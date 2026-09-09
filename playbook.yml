@@ -14,13 +14,6 @@
         update_cache: yes
         cache_valid_time: 3600
 
-    - name: Wait for dpkg lock to be released
-      wait_for:
-        path: /var/lib/dpkg/lock-frontend
-        state: absent
-        timeout: 600
-      become: yes
-
     - name: Install required packages
       apt:
         name:
